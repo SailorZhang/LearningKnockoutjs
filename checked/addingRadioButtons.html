@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>addingRadioButtons</title>
+    <script type="text/javascript" src="../knockout-2.2.1.js"></script>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var viewModel = {
+                wantsSpam:ko.observable(true),
+                spamFlavor:ko.observable('almond')
+            };
+
+            viewModel.spamFlavor('msg');
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+<p>Send me spam: <input type="checkbox" data-bind="checked: wantsSpam"/></p>
+
+<div data-bind="visible: wantsSpam">
+    Preferred flavor of spam:
+    <div><input type="radio" name="flavorGroup" value="cherry" data-bind="checked: spamFlavor"/> Cherry</div>
+    <div><input type="radio" name="flavorGroup" value="almond" data-bind="checked: spamFlavor"/> Almond</div>
+    <div><input type="radio" name="flavorGroup" value="msg" data-bind="checked: spamFlavor"/> Monosodium Glutamate</div>
+</div>
+</body>
+</html>

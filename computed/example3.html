@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>computed</title>
+    <script type="text/javascript" src="../knockout-2.2.1.js"></script>
+    <script type="text/javascript">
+
+        function AppViewModel() {
+            this.acceptedNumericValue = ko.observable(123);
+            this.lastInputWasValid = ko.observable(true);
+            this.attemptedValue = ko.computed({
+                read:function () {
+                    return this.acceptedNumericValue();
+                },
+                write:function (value) {
+                    if (isNaN(value)) {
+                        this.lastInputWasValid(false);
+                    } else {
+                        this.lastInputWasValid(true);
+                        this.acceptedNumericValue(value);
+                    }
+                },
+                owner:this
+            });
+        }
+
+        window.onload = function () {
+            ko.applyBindings(new AppViewModel());
+        };
+    </script>
+</head>
+<body>
+<p>Enter a numeric value: <input type="text" data-bind="value:attemptedValue"></p>
+
+<div data-bind="visible:!lastInputWasValid()">That's not a numeric!</div>
+</body>
+</html>

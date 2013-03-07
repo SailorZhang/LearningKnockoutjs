@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>note 2: Using the "foreach" option with a named template</title>
+    <script type="text/javascript" src="../knockout-min.js"></script>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        var viewModel = {
+            people:[
+                {name:'Sailor', credits:250},
+                {name:'Jarrick', credits:500}
+            ]
+        };
+
+
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+<h2>Participants</h2>
+Here are the participants:
+<div data-bind="template:{name:'person-template',foreach:people}"></div>
+<script type="text/html" id="person-template">
+    <h3 data-bind="text:name"></h3>
+
+    <p>Credits: <span data-bind="text: credits"></span></p>
+</script>
+</body>
+</html>

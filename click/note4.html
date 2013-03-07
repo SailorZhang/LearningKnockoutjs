@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>preventing the event from bubbling</title>
+    <script type="text/javascript" src="../knockout-2.2.1.js"></script>
+    <script type="text/javascript">
+        function AppViewModel() {
+            this.myButtonHandler = function () {
+                console.log('button handler');
+            };
+
+            this.myDivHandler = function () {
+                console.log('div handler');
+            };
+        }
+
+        window.onload = function () {
+            ko.applyBindings(new AppViewModel());
+        };
+    </script>
+</head>
+<body>
+<div data-bind="click:myDivHandler">
+    <!--if want prevent the event from bubbling, set clickBubble to false-->
+    <button data-bind="click:myButtonHandler,clickBubble:false">
+        Click me
+    </button>
+</div>
+</body>
+</html>

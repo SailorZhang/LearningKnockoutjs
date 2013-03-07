@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>binding object</title>
+    <script type="text/javascript" src="../knockout-min.js"></script>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        var Country = function (name, population) {
+            this.countryName = name;
+            this.countryPopulation = population;
+        };
+
+        var viewModel = {
+            countries:ko.observableArray([
+                new Country('China', 123456),
+                new Country('USA', 456789),
+                new Country('HK', 789123)
+            ]),
+            selectedCountry:ko.observable()
+        };
+
+
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+<p>Choose some countries you'd like to visit:
+    <select data-bind="options:countries, optionsText:'countryName', value:selectedCountry, optionsCaption:'Choose...'"></select>
+    <select data-bind="options:countries, optionsText:function(item){
+            return item.countryName+'(pop:'+item.countryPopulation+')'
+        }, value:selectedCountry, optionsCaption:'Choose...'"></select>
+</p>
+
+<div data-bind="visible: selectedCountry"> <!-- Appears when you select something -->
+    You have chosen a country with population
+    <span data-bind="text: selectedCountry() ? selectedCountry().countryPopulation : 'unknown'"></span>.
+</div>
+</body>
+</html>

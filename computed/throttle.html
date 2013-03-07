@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>throttle</title>
+    <script type="text/javascript" src="../knockout-2.2.1.js"></script>
+    <script type="text/javascript">
+        function AppViewModel() {
+            this.inputName = ko.observable("");
+            this.inputNameArr = ko.observableArray([]);
+            this.inputNameThrottle = ko.computed(this.inputName).extend({throttle:1000});
+
+            this.inputNameThrottle.subscribe(function (newValue) {
+                if (newValue != "")
+                    this.inputNameArr.push(newValue);
+            }, this);
+
+            this.remove = function (name) {
+                this.inputNameArr.remove(name);
+            }.bind(this);
+
+            this.afterRenderHandler = function (a, b) {
+                alert(this.inputNameArr().length);
+            }.bind(this);
+        }
+
+        window.onload = function () {
+            ko.applyBindings(new AppViewModel());
+        };
+    </script>
+</head>
+<body>
+<input type="text" data-bind="value:inputName,valueUpdate:'afterkeydown'"><br>
+you type name is <span data-bind="text:inputName"></span>
+
+<div data-bind="visible:inputNameArr().length>0">
+    can you see?
+    <ul data-bind="foreach:{data:inputNameArr,afterRender:afterRenderHandler}">
+        <li><span data-bind="text:$data"></span>
+            <span data-bind="text:$index"></span>
+            <button data-bind="click:$parent.remove">X</button>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

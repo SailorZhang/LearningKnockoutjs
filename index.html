@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Knockout</title>
+    <script type="text/javascript" src="knockout-2.2.1.js"></script>
+    <script type="text/javascript">
+        var viewModel = {
+            personName:ko.observable('Bob'),
+            personAge:123
+        };
+
+//                function AppViewModel() {
+//                    this.firstName = ko.observable("Sailor");
+//                    this.lastName = ko.observable("Zhang");
+//                    this.fullName = ko.computed(function () {
+//                        return this.firstName() + '.' + this.lastName();
+//                    }, new OtherViewModel());
+//                }
+
+        function AppViewModel() {
+            this.firstName = ko.observable("Sailor");
+            this.lastName = ko.observable("Zhang");
+            this.updateName = ko.observable("");
+            this.fullName = ko.computed({
+                read:function () {
+                    return this.firstName() + "." + this.lastName();
+                },
+                /*write:function (value) {
+                 //this.updateName(value);
+                 },*/
+                owner:this
+            });
+        }
+
+        function OtherViewModel() {
+            this.firstName = ko.observable("Jarrick");
+            this.lastName = ko.observable("Miao");
+        }
+        window.onload = function () {
+            ko.applyBindings(new AppViewModel());
+        }
+
+        //viewModel.personName.subscribe(function (newValue) {
+        //alert("The person's new name is" + newValue);
+        //});
+    </script>
+</head>
+<body>
+The name is <span data-bind="text:lastName"></span>
+<input type="text" data-bind="value:lastName">
+<br>
+The full name is <span data-bind="text:fullName"></span>
+<input type="text" data-bind="value:fullName">
+The update name is <span data-bind="text:updateName"></span>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Note 5: Dynamically choosing which template is used</title>
+    <script type="text/javascript" src="../knockout-min.js"></script>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        var viewModel = {
+            employees:ko.observableArray([
+                { name:"Kari", active:ko.observable(true) },
+                { name:"Brynn", active:ko.observable(false) },
+                { name:"Nora", active:ko.observable(false) }
+            ]),
+            displayMode:function (employee) {
+                // Initially "Kari" uses the "active" template, while the others use "inactive"
+                return employee.active() ? "active" : "inactive";
+            }
+        };
+
+        // ... then later ...
+        viewModel.employees()[1].active(true); // Now "Brynn" is also rendered using the "active" template.
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+<ul data-bind='template: { name: displayMode,
+                           foreach: employees }'></ul>
+<script type="text/html" id="active">
+    <span data-bind="text:name"></span>
+</script>
+<script type="text/html" id="inactive">
+    <span data-bind="text:active"></span>
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>throttle</title>
+    <script type="text/javascript" src="../knockout-2.2.1.js"></script>
+    <script type="text/javascript">
+        function AppViewModel() {
+            this.myFunction = function (data, event) {
+                console.log(data);
+                console.log(event);
+                //if you want use link default aciton, return true
+                //return true;
+            };
+        }
+
+        window.onload = function () {
+            ko.applyBindings(new AppViewModel());
+        };
+    </script>
+</head>
+<body>
+<button data-bind="click:myFunction.bind($data,'param1','param2')">Click me</button>
+<a href="www.baidu.com" data-bind="click:myFunction">Link default</a>
+</body>
+</html>

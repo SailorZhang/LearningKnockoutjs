@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>throttle</title>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="../knockout-2.2.1.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            ko.applyBindings({
+                myItems:ko.observableArray(['A', 'B', 'C']),
+                yellowFadeIn:function (element, index, data) {
+                    $(element).filter('li')
+                            .animate({backgroundColor:'yellow'}, 5000);
+                },
+                addItem:function () {
+                    this.myItems.push('New item');
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+<ul data-bind="foreach: { data: myItems, afterAdd: yellowFadeIn }">
+    <li data-bind="text: $data"></li>
+</ul>
+
+<button data-bind="click: addItem">Add</button>
+</body>
+</html>

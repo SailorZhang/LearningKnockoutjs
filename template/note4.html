@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Note 4: Using "afterRender", "afterAdd", and "beforeRemove"</title>
+    <script type="text/javascript" src="../knockout-min.js"></script>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+        var viewModel = {
+            seasons:ko.observableArray([
+                { name:'Spring', months:[ 'March', 'April', 'May' ] },
+                { name:'Summer', months:[ 'June', 'July', 'August' ] },
+                { name:'Autumn', months:[ 'September', 'October', 'November' ] },
+                { name:'Winter', months:[ 'December', 'January', 'February' ] }
+            ])
+        };
+
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+<ul data-bind="template:{name:'seasonTemplate',foreach:seasons, as:'season'}"></ul>
+<script type="text/html" id="seasonTemplate">
+    <li>
+        <strong data-bind="text:name"></strong>
+        <ul data-bind="template:{name:'monthTemplate',foreach:months,as:'month'}"></ul>
+    </li>
+</script>
+<script type="text/html" id="monthTemplate">
+    <li>
+        <span data-bind="text:month"></span>
+        is in
+        <span data-bind="text:season.name"></span>
+    </li>
+</script>
+</body>
+</html>

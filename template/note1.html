@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Note 1: Rendering a named template</title>
+    <script type="text/javascript" src="../knockout-min.js"></script>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+
+
+        var viewModel = {
+            buyer:{name:'Sailor', credits:250},
+            seller:{name:'Jarrick', credits:500},
+            myPostProcessingLogic:function (element) {
+                var a = element;
+            }
+        };
+
+
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+<h2>Participants</h2>
+Here are the participants:
+<div data-bind="template:{name:'person-template',data:buyer,afterRender:myPostProcessingLogic}"></div>
+<div data-bind="template:{name:'person-template',data:seller}"></div>
+<script type="text/html" id="person-template">
+    <h3 data-bind="text:name"></h3>
+
+    <p>Credits: <span data-bind="text: credits"></span></p>
+</script>
+</body>
+</html>
