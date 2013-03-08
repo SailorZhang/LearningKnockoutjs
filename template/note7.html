@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Note 6: Using jQuery.tmpl, an external string-based template engine</title>
+    <title>Note 7: Using the Underscore.js template engine</title>
     <script type="text/javascript" src="../jquery-1.9.0.js"></script>
-    <script type="text/javascript" src="../jquery.tmpl.min.js"></script>
     <script type="text/javascript" src="../knockout-min.js"></script>
+    <script type="text/javascript" src="../underscore-min.js"></script>
     <script type="text/javascript">
         var viewModel = {
             people: ko.observableArray([
@@ -21,13 +21,14 @@
 </head>
 <body>
 <h1>People</h1>
+
 <div data-bind="template:'peopleList'"></div>
 <script type="text/html" id="peopleList">
-    {{each people}}
-        <p>
-            <b>${name}</b> is ${age} years old
-        </p>
-    {{/each}}
+    <% _.each(people(),function(people){ %>
+        <li>
+            <b><%= person.name %></b> is <%= people.age %> years old.
+        </li>
+    <% }) %>
 </script>
 </body>
 </html>

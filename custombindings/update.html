@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>slide visible</title>
+    <script type="text/javascript" src="../jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="../knockout-min.js"></script>
+    <script type="text/javascript">
+        var viewModel = {
+            giftWrap: ko.observable(false)
+        };
+
+        ko.bindingHandlers.slideVisible = {
+            init: function (element, valueAccessor) {
+                var value = ko.utils.unwrapObservable(valueAccessor());
+                $(element).toggle(value);
+            },
+            update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                var value = valueAccessor(), allBindings = allBindingsAccessor();
+
+                var valueUnwrapped = ko.utils.unwrapObservable(value);
+
+                var duration = allBindings.slideDuration || 400;
+
+                if (valueUnwrapped == true)
+                    $(element).slideDown(duration);
+                else
+                    $(element).slideUp(duration);
+            }
+        };
+
+        $(function () {
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+<div data-bind="slideVisible:giftWrap, slideDuration:600">You have selected the option</div>
+<label><input type="checkbox" data-bind="checked:giftWrap"/>Gift wrap</label>
+</body>
+</html>
